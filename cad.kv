@@ -1,6 +1,7 @@
 #--------------------------------LOGIN--------------------------
 <Login@FloatLayout>
     Label:
+        id:log
         text:"CADERNO DE CONTAS"
         font_size:100
         color:1,1,1,1
@@ -42,6 +43,7 @@
 <Cadastro@FloatLayout>
     Label:
         text:"CADASTRO"
+        id:cad
         font_size:100
         color:1,1,1,1
         pos_hint: {"center_y": .8,"center_x":.5}
@@ -142,7 +144,20 @@
 #---------------------------------HOME--------------------------------
 
 <Home@FloatLayout>
+    ActionBar:
+        pos_hint: {"center_y": .963,"center_x":.5}
+        ActionView:
+            ActionPrevious:
+                title:"HOME"
+                on_release:root.voltar()
+            ActionButton:
+                text: "Atalhos"
+                on_release:root.atalhos()
+            ActionButton:
+                text: "Ajuda"
+                on_release:root.ajuda()
     Label:
+        id:h
         text:"HOME"
         font_size:100
         color:1,1,1,1
@@ -178,5 +193,154 @@
         pos_hint: {"center_y": .35,"center_x":.5}
         #on_press: root.voltar()
 
+#-----------AJUDA----------
+<AjudaHome@FloatLayout>
+    ActionBar:
+        pos_hint: {"center_y": .963,"center_x":.5}
+        ActionView:
+            ActionPrevious:
+                title:"AJUDA"
+                on_release:root.voltar()
+    Label:
+        id:jh
+        text:"AJUDA"
+        font_size:100
+        color:1,1,1,1
+        pos_hint: {"center_y": .8,"center_x":.5}
+    Label:
+        id:x1
+        text:"Acessar->Acesso aos cadernos de contas"
+        font_size:45#14
+        color:1,0,0,1
+        pos_hint: {"center_y": .7,"x":-.08}
+    Label:
+        id:x2
+        text:"Registrar->Registro de um gasto/ganho"
+        font_size:45#14
+        color:1,0,0,1
+        pos_hint: {"center_y": .6,"x":-.1}
+    Label:
+        id:x3
+        text:"Saldo->Saldo atual ou anual/mensal"
+        font_size:45#14
+        color:1,0,0,1
+        pos_hint: {"center_y": .5,"x":-.14}
+        #markup=True
+    Label:
+        id:x4
+        text:"Graficos->Graficos dos gastos"
+        font_size:45#14
+        color:1,0,0,1
+        pos_hint: {"center_y": .4,"x":-.19}
+    Label:
+        id:x5
+        text:"Tipos->Criacao ou exclusao de algum tipo de gasto"
+        font_size:45#14
+        color:1,0,0,1
+        pos_hint: {"center_y": .3,"x":.0}
+#-----------------------------------ATALHOS------------------
+<Atalhos@FloatLayout>
+    ActionBar:
+        pos_hint: {"center_y": .963,"center_x":.5}
+        ActionView:
+            ActionPrevious:
+                title:"ATALHOS"
+                on_release:root.voltar()
+            ActionButton:
+                text: "AJUDA"
+                on_release:root.ajuda()
+    Label:
+        id:at
+        text:"ATALHOS"
+        font_size:100
+        color:1,1,1,1
+        pos_hint: {"center_y": .8,"center_x":.5}
+    Button:
+        id:con
+        text:"Registrar"
+        size_hint:.3,.1
+        pos_hint: {"center_y": .5,"center_x":.675}
+        #on_press: root.confirmar()
+    Button:
+        id:vol
+        text:"Deletar"
+        size_hint:.3,.1
+        pos_hint: {"center_y": .5,"center_x":.325}
+        #on_press: root.voltar()
+    Button:
+        id:con
+        text:"Acessar"
+        size_hint:.3,.1
+        pos_hint: {"center_y": .2,"center_x":.675}
+        #on_press: root.confirmar()
+    Button:
+        id:vol
+        text:"Graficos"
+        size_hint:.3,.1
+        pos_hint: {"center_y": .2,"center_x":.325}
+        #on_press: root.voltar()
+    Button:
+        id:vol
+        text:"$Saldo$"
+        size_hint:.3,.1
+        pos_hint: {"center_y": .35,"center_x":.675}
+        #on_press: root.voltar()
+    Button:
+        id:vol
+        text:"Tipos"
+        size_hint:.3,.1
+        pos_hint: {"center_y": .35,"center_x":.325}
+        #on_press: root.voltar()
 
+#------------------AJUDA------------
+<AjudaAtalhos@FloatLayout>
+    ActionBar:
+        pos_hint: {"center_y": .963,"center_x":.5}
+        ActionView:
+            ActionPrevious:
+                title:"AJUDA"
+                on_release:root.voltar()
+    Label:
+        id:ja
+        text:"AJUDA"
+        font_size:100
+        color:1,1,1,1
+        pos_hint: {"center_y": .8,"center_x":.5}
+    Label:
+        id:x1
+        text:""
+        font_size:45#14
+        color:1,0,0,1
+        pos_hint: {"center_y": .7,"x":-.08}
+    Label:
+        id:x2
+        text:"Registrar->Registro de um gasto/ganho"
+        font_size:45#14
+        color:1,0,0,1
+        pos_hint: {"center_y": .6,"x":-.1}
+    Label:
+        id:x3
+        text:"Tipos->Criacao ou exclusao de algum tipo de gasto"
+        font_size:45#14
+        color:1,0,0,1
+        pos_hint: {"center_y": .5,"x":-.14}
+        #markup=True
+    Label:
+        id:x4
+        text:"Saldo->Saldo atual ou anual/mensal"
+        font_size:45#14
+        color:1,0,0,1
+        pos_hint: {"center_y": .4,"x":-.19}
+    Label:
+        id:x5
+        text:"Graficos->Graficos dos gastos"
+        font_size:45#14
+        color:1,0,0,1
+        pos_hint: {"center_y": .3,"x":.0}
+    Label:
+        id:x6
+        text:"Acessar->Acesso aos cadernos de contas"
+        font_size:45#14
+        color:1,0,0,1
+        pos_hint: {"center_y": .2,"x":.0}
 Login:

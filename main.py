@@ -9,11 +9,34 @@ from kivy.uix.floatlayout import FloatLayout
 from kivy.uix.textinput import TextInput
 from kivy.uix.button import Button
 from kivy.core.window import  Window
+from kivy.uix.button import Button
 #conn=sqlite3.connect(r"/storage/emulated/0/kivy/Caderno de Contas/log.db")
 conn=sqlite3.connect(r"C:\dev\eXcript\kivy\source\projetos\Caderno de Contas\Android\log.db")
 
 u=None
 s=None
+
+
+def remove(s):
+    global cls
+    cls = {'h': h, 'log': log, 'cad': cad, 'jh': jh, 'at': at,
+           'ja': ja}
+    # print(self.ids)
+    for i in list(s.ids.keys()):
+        # print(i)
+        if (i == "h" or i == "jh" or i == "cad"
+                or i == "log" or i == "at" or i == "ja"):
+            global rem
+            global ant
+            rem = cls[i]
+            if (i != "ja" and i != "at"):
+                ant = rem
+    # print(rem)
+    # print("-----"+str(ant))
+    if (rem==log):
+        tela.root_window.remove_widget(tela.root)
+    tela.root_window.remove_widget(rem)
+
 class Login(FloatLayout):
     def entrar(self):
         self.ids.sErro.color = 0, 0, 0, 0
@@ -45,24 +68,22 @@ class Login(FloatLayout):
             if (str(i) != '[0, 0, 0, 0]'):
                 chc = 0
         if(chc==1):
-            tela.root_window.remove_widget(tela.root)
+            remove(self)
             global h
             h=Home()
             tela.root_window.add_widget(h)
     def cadastrar(self):
-        tela.root_window.remove_widget(tela.root)
-        tela.root_window.remove_widget(p)
-        global c
-        c = Cadastro()
-        tela.root_window.add_widget(c)
+        remove(self)
+        global cad
+        cad = Cadastro()
+        tela.root_window.add_widget(cad)
 
 class Cadastro(FloatLayout):
     def voltar(self):
-        tela.root_window.remove_widget(tela.root)
-        tela.root_window.remove_widget(c)
-        global p
-        p = Login()
-        tela.root_window.add_widget(p)
+        remove(self)
+        global log
+        log = Login()
+        tela.root_window.add_widget(log)
     def confirmar(self):
         u = self.ids.u.text
         s = self.ids.s.text
@@ -133,11 +154,77 @@ class Cadastro(FloatLayout):
             self.ids.suc.color = 1, 0, 0, 1
 
 class Home(FloatLayout):
-    pass
+    def voltar(self):
+        remove(self)
+        global log
+        log = Login()
+        tela.root_window.add_widget(log)
+    def ajuda(self):
+        remove(self)
+        global jh
+        jh = AjudaHome()
+        tela.root_window.add_widget(jh)
+        jh.ids.x1.text="Acessar[color=#ffffff]->Acesso aos cadernos de contas[/color]"
+        jh.ids.x1.markup=True
+        jh.ids.x2.text="Registrar[color=#ffffff]->Registro de um gasto/ganho[/color]"
+        jh.ids.x2.markup=True
+        jh.ids.x3.text="Saldo[color=#ffffff]->Saldo atual ou anual/mensal[/color]"
+        jh.ids.x3.markup=True
+        jh.ids.x4.text="Graficos[color=#ffffff]->Graficos dos gastos[/color]"
+        jh.ids.x4.markup=True
+        jh.ids.x5.text="Tipos[color=#ffffff]->Criacao ou exclusao de algum tipo de gasto[/color]"
+        jh.ids.x5.markup=True
+    def atalhos(self):
+        remove(self)
+        global at
+        at=Atalhos()
+        tela.root_window.add_widget(at)
+
+class Atalhos(FloatLayout):
+    def voltar(self):
+        tela.root_window.add_widget(ant)
+        remove(self)
+    def ajuda(self):
+        remove(self)
+        global ja
+        ja=AjudaAtalhos()
+        tela.root_window.add_widget(ja)
+        ja.ids.x1.text = "Deletar[color=#ffffff]->Deleta um gasto/ganho[/color]"
+        ja.ids.x1.markup = True
+        ja.ids.x2.text = "Registrar[color=#ffffff]->Registro de um gasto/ganho[/color]"
+        ja.ids.x2.markup = True
+        ja.ids.x3.text = "Tipos[color=#ffffff]->Criacao ou exclusao de algum tipo de gasto[/color]"
+        ja.ids.x3.markup = True
+        ja.ids.x4.text = "Saldo[color=#ffffff]->Saldo atual ou anual/mensal[/color]"
+        ja.ids.x4.markup = True
+        ja.ids.x5.text = "Graficos[color=#ffffff]->Graficos dos gastos[/color]"
+        ja.ids.x5.markup = True
+        ja.ids.x6.text = "Acessar[color=#ffffff]->Acesso aos cadernos de contas[/color]"
+        ja.ids.x6.markup = True
+
+class AjudaHome(FloatLayout):
+    def voltar(self):
+        remove(self)
+        tela.root_window.add_widget(h)
+
+class AjudaAtalhos(FloatLayout):
+    def voltar(self):
+        remove(self)
+        tela.root_window.add_widget(at)
 
 class CadApp(App):
-    global p
-    p=Login()
+    global log
+    global cad
+    global h
+    global jh
+    global at
+    global ja
+    at=Atalhos()
+    log=Login()
+    cad=Cadastro
+    jh=AjudaHome()
+    h=Home()
+    ja=AjudaAtalhos()
 
 Window.size= 325,650
 tela=CadApp()
@@ -167,3 +254,22 @@ tela.run()
 # cursor=conn.execute("select * from LOGIN")
 # rows=cursor.fetchall()
 # print(rows)
+
+# def atalhos(self):
+#     global cls
+#     cls={'h': Home(),'l':Login(),'cad':Cadastro(),'jh':AjudaHome(),'at':Atalhos}
+#     print(self.ids)
+#     for i in list(self.ids.keys()):
+#         print(i)
+#         if (i == "h" or i == "jh" or i == "cad" or i == "log"):
+#             global rem
+#             rem=cls[i]
+#             break
+#
+#     #x = "tela.root_window.remove_widget(" + wid + ")"
+#     print(rem)
+#     tela.root_window.remove_widget(rem)
+#     tela.root_window.remove_widget(jh)
+#     global at
+#     at = Atalhos()
+#     tela.root_window.add_widget(at)

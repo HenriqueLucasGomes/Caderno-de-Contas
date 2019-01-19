@@ -1,8 +1,8 @@
 #coding: utf-8
 #author Henrique Lucas Gomes Rezende
 import sqlite3
-#conn=sqlite3.connect(r"/storage/emulated/0/kivy/Caderno de Contas/log.db")
-conn=sqlite3.connect(r"C:\dev\eXcript\kivy\source\projetos\Caderno de Contas\Android\log.db")
+conn=sqlite3.connect(r"/storage/emulated/0/kivy/Caderno de Contas/log.db")
+#conn=sqlite3.connect(r"C:\dev\eXcript\kivy\source\projetos\Caderno de Contas\Android\log.db")
 
 global b
 def newAge(age):
