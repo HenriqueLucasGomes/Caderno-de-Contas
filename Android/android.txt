@@ -1,0 +1,2 @@
+title= LOG
+author= EuMesmo
