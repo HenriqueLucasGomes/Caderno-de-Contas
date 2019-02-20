@@ -1,0 +1,146 @@
+
+<Principal@FloatLayout>
+    Label:
+        text:"CADERNO DE CONTAS"
+        font_size:70
+        color:1,1,1,1
+        pos_hint: {"center_y": .8,"center_x":.5}
+    Button:
+        text:"Entrar"
+        size_hint:.15,.1
+        pos_hint: {"center_y": .275,"center_x":.575}
+        on_press: root.entrar()
+    Button:
+        text:"Cadastrar"
+        size_hint:.15,.1
+        pos_hint: {"center_y": .275,"center_x":.425}
+        on_press: root.cadastrar()
+    TextInput:
+        id:u
+        size_hint:.3,.05
+        pos_hint: {"center_y": .5,"center_x":.5}
+        text:"USUARIO"
+    TextInput:
+        id:s
+        size_hint:.3,.05
+        pos_hint: {"center_y": .4,"center_x":.5}
+        text:"SENHA"
+    Label:
+        id:uErro
+        text:"USUARIO INVALIDO"
+        font_size:14
+        color:0,0,0,0#color:1,0,0,1
+        pos_hint: {"center_y": .5,"center_x":.73}
+    Label:
+        id:sErro
+        text:"SENHA INVALIDA"
+        font_size:14
+        color:0,0,0,0#color:1,0,0,1
+        pos_hint: {"center_y": .4,"center_x":.72}
+
+<Cadastro@FloatLayout>
+    Label:
+        text:"CADASTRO"
+        font_size:70
+        color:1,1,1,1
+        pos_hint: {"center_y": .8,"center_x":.5}
+    TextInput:
+        id:n
+        size_hint:.3,.05
+        pos_hint: {"center_y": .6,"center_x":.2}
+        text:"NOME COMPLETO"
+    TextInput:
+        id:d
+        size_hint:.3,.05
+        pos_hint: {"center_y": .6,"center_x":.5}
+        text:"DD/MM/AA"
+    TextInput:
+        id:sx
+        size_hint:.3,.05
+        pos_hint: {"center_y": .6,"center_x":.8}
+        text:"SEXO F/M"
+    TextInput:
+        id:u
+        size_hint:.3,.05
+        pos_hint: {"center_y": .5,"center_x":.2}
+        text:"USUARIO"
+    TextInput:
+        id:s
+        size_hint:.3,.05
+        pos_hint: {"center_y": .5,"center_x":.5}
+        text:"SENHA"
+    TextInput:
+        id:c
+        size_hint:.3,.05
+        pos_hint: {"center_y": .5,"center_x":.8}
+        text:"CONFIRMAR SENHA"
+    Button:
+        id:con
+        text:"Confirmar"
+        size_hint:.15,.1
+        pos_hint: {"center_y": .275,"center_x":.575}
+        on_press: root.confirmar()
+    Button:
+        id:vol
+        text:"Voltar"
+        size_hint:.15,.1
+        pos_hint: {"center_y": .275,"center_x":.425}
+        on_press: root.voltar()
+    Label:
+        id:uErro
+        text:"USUARIO JA EXISTE"
+        font_size:14
+        color:0,0,0,0#color:1,0,0,1
+        pos_hint: {"center_y": .55,"center_x":.2}
+    Label:
+        id:dErro
+        text:"DATA INVALIDA"
+        font_size:14
+        color:0,0,0,0#color:1,0,0,1
+        pos_hint: {"center_y": .65,"center_x":.5}
+    Label:
+        id:cErro
+        text:"CONFIRMACAO INVALIDA"
+        font_size:14
+        color:0,0,0,0#color:1,0,0,1
+        pos_hint: {"center_y": .55,"center_x":.8}
+    Label:
+        id:nErro
+        text:"NOME INVALIDO"
+        font_size:14
+        color:0,0,0,0#color:1,0,0,1
+        pos_hint: {"center_y": .65,"center_x":.2}
+    Label:
+        id:sErro
+        text:"SENHA INVALIDA"
+        font_size:14
+        color:0,0,0,0#color:1,0,0,1
+        pos_hint: {"center_y": .55,"center_x":.5}
+    Label:
+        id:sxErro
+        text:"SEXO INVALIDO"
+        font_size:14
+        color:0,0,0,0#color:1,0,0,1
+        pos_hint: {"center_y": .65,"center_x":.8}
+    Label:
+        id:suc
+        text:"CADASTRO REALIZADO COM SUCESSO"
+        font_size:20
+        color:0,0,0,0#1,0,0,1
+        pos_hint: {"center_y": .7,"center_x":.5}
+    Button:
+        id:gam
+        text:"Continue"
+        opacity:.0
+        disabled:True
+        size_hint:.3,.1
+        color:0,0,0,0
+        pos_hint: {"center_y": .175,"center_x":.5}
+        on_press: root.voltar()
+
+<Inter@FloatLayout>
+
+
+
+
+Principal:
