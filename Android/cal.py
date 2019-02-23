@@ -1,11 +1,14 @@
 #coding: utf-8
 #author Henrique Lucas Gomes Rezende
 import sqlite3
-conn=sqlite3.connect(r"/storage/emulated/0/kivy/Caderno de Contas/log.db")
-#conn=sqlite3.connect(r"C:\dev\eXcript\kivy\source\projetos\Caderno de Contas\Android\log.db")
+#conn=sqlite3.connect(r"/storage/emulated/0/kivy/Caderno de Contas/log.db")#Conexão com o BD no Android
+#conn=sqlite3.connect(r"C:\dev\eXcript\kivy\source\projetos\Caderno de Contas\Android\log.db")#Conexão com o BD no Windows
+conn=sqlite3.connect(r"/home/henrique/projetos/Caderno de Contas/Caderno-de-Contas/Android/log.db")#Conexão com o BD no Linux
+
+# RESPOSÁVEL PELA PARTE DE DATAS E CALENDÁRIO
 
 global b
-def newAge(age):
+def newAge(age):#procura se o ano informado é bixesto ou não
     age+=2000
     if(age<2000):
         return False
@@ -22,7 +25,7 @@ def newAge(age):
 
 def date(dat):
     r=0
-    try:
+    try:#procura por algum erro na digitaçõ da data
         if (True):
             if (len(dat) != 8 or dat[2] != '/' or dat[5] != '/'
                     or int(dat[0]) > 3 or int(dat[0]) < 0 or int(dat[1]) <= 0
@@ -46,7 +49,7 @@ def date(dat):
     # qual ano/caderno ele se encaixa
     cursor = conn.execute("select ANO from ANOS")
     rows = cursor.fetchall()
-    if(True):
+    if(True):#procura por um caderno que tenha o mesmo ano
         for i in rows:
             if (str(i[0]) == str(dat[6:8])):
                 r=2
@@ -54,7 +57,7 @@ def date(dat):
         print("DATA JA OCUPADA")
         return r
     else:
-        # verifica se a data existe data existente
+        # verifica se a data existe
         me = {"01": "Janeiro", "02": "Fevereiro", "03": "Março", "04": "Abril", "05": "Maio", "06": "Junho",
           "07": "Julho", "08": "Agosto", "09": "Setembro", "10": "Outubro", "11": "Novembro", "12": "Dezembro"}
         sem={0:"seg",1:"ter",2:"qua",3:"qui",4:"sex",5:"sab",6:"dom"}
@@ -67,14 +70,14 @@ def date(dat):
             print("DATA INEXISTENTE")
             return 3
         # qual dia da semana ele pertence
-        s=int((int(dat[6:8])/4)+int(dat[6:8])-1)
-        print(s)
+        s=int((int(dat[6:8])/4)+int(dat[6:8])-1)#calculo feito a partir da logica do anos bixestos + 1 dia seman somado a cada ano, o ano base é
+        #print(s)
         d=int(s/7)
         s-=d*7
         #print(sem.pop(s))
         return sem.pop(s)
 
+print("dd/mm/aa")
+print(date(str(input())))
 
-date(str(input()))
-#newAge(int(input()))
 
