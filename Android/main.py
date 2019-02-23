@@ -14,10 +14,11 @@ from kivy.animation import Animation
 from kivy.clock import Clock
 from time import sleep, time
 
-#conn=sqlite3.connect(r"/storage/emulated/0/kivy/Caderno de Contas/log.db")
-conn=sqlite3.connect(r"C:\dev\eXcript\kivy\source\projetos\Caderno de Contas\Android\log.db")
+#conn=sqlite3.connect(r"/storage/emulated/0/kivy/Caderno de Contas/log.db")#Conexão com o BD no Android
+#conn=sqlite3.connect(r"C:\dev\eXcript\kivy\source\projetos\Caderno de Contas\Android\log.db")#Conexão com o BD no Windows
+conn=sqlite3.connect(r"/home/henrique/projetos/Caderno de Contas/Caderno-de-Contas/Android/log.db")#Conexão com o BD no Windows
 
-def remove(s):
+def remove(s):#remoção de automatica de widget
     global cls
     cls = {'h': h, 'log': log, 'cad': cad, 'jh': jh, 'at': at,
            'ja': ja}
@@ -32,83 +33,80 @@ def remove(s):
             rem = cls[i]
             if (i != "ja" and i != "at"):
                 ant = rem
-    # print(rem)
-    # print("-----"+str(ant))
     if (rem==log):
         tela.root_window.remove_widget(tela.root)
     tela.root_window.remove_widget(rem)
 
-class Login(FloatLayout):
-    def entrar(self):
-        global u
-        global s
-        self.ids.sErro.color = 0, 0, 0, 0
+class Login(FloatLayout):#tela de login
+    def entrar(self):#click no botão entrar
+        global u#armazena o texto na parte do usuario
+        global s#armazena o texto na parte da senha
+        self.ids.uErro.color = 0, 0, 0, 0#define a cor como sendo preta, ocultando o texto de erro
         self.ids.sErro.color = 0, 0, 0, 0
         u = self.ids.u.text
         s = self.ids.s.text
         global sav
         sav=self
+        #checa se não foi digitado somente o default
         if(u=="USUARIO"):
-            self.ids.uErro.color=1,0,0,1
+            self.ids.uErro.color=1,0,0,1#define a cor como sendo vermelha, revelando o texto de erro
         if(s=="SENHA"):
             self.ids.sErro.color=1,0,0,1
         cursor = conn.execute("select USUARIO from LOGIN")
         rows = cursor.fetchall()
+
         if(True):
             self.ids.uErro.color = 1, 0, 0, 1
             for i in rows:
-                if(str(i[0])==u):
+                if(str(i[0])==u):#procura algum usuario em comum, se encontrado é retirado o erro
                     self.ids.uErro.color = 0, 0, 0, 0
         cursor = conn.execute("select SENHA from LOGIN where USUARIO='"+u+"'")
         rows = cursor.fetchall()
         if (self.ids.uErro.color==0,0,0,0):
             self.ids.sErro.color = 1, 0, 0, 1
             for i in rows:
-                if (str(i[0]) == s):
+                if (str(i[0]) == s):#se a senha for igual retira o erro
                     self.ids.sErro.color = 0, 0, 0, 0
         l = str(self.ids.uErro.color), str(self.ids.sErro.color)
         chc = 1
-        for i in l:
+        for i in l:#procurar para ver se algum possue erro
             if (str(i) != '[0, 0, 0, 0]'):
                 chc = 0
         if(chc==1):
             anim=Animation(x=100)
             anim.start(log)
-            #Clock.schedule_once(remove(self),5)
-            #sleep(3)
-            #remove(self)
+
             global h
-            h=Home()    #MANO, CARA TENHA UM BOM DIA E PENSA NO QUE SE VAI FAZER NESSE TREM AQUI
-            #anim.start(h)
-            #Clock.schedule_once(tela.root_window.add_widget(h),5)
-            tela.root_window.add_widget(h)
-    def cadastrar(self):
+            h=Home()
+            tela.root_window.add_widget(h)#passa para a tela principal
+    def cadastrar(self):#botão cadastrar
         remove(self)
         global cad
         cad = Cadastro()
         tela.root_window.add_widget(cad)
 
-class Cadastro(FloatLayout):
-    def voltar(self):
+class Cadastro(FloatLayout):#tela de cadastro
+    def voltar(self):#volta para a tela de login
         remove(self)
         global log
         log = Login()
         tela.root_window.add_widget(log)
-    def confirmar(self):
-        u = self.ids.u.text
-        s = self.ids.s.text
-        n = self.ids.n.text
-        d = self.ids.d.text
-        sx = self.ids.sx.text
-        c = self.ids.c.text
-        self.ids.uErro.color = 0, 0, 0, 0
+    def confirmar(self):#confirma as informações do cadastro
+        u = self.ids.u.text#armazena o texto na parte do usuario
+        s = self.ids.s.text#armazena o texto na parte da senha
+        n = self.ids.n.text#armazena o texto na parte do nome
+        d = self.ids.d.text#armazena o texto na parte do data
+        sx = self.ids.sx.text#armazena o texto na parte do sexo
+        c = self.ids.c.text#armazena o texto na parte do conformação da senha
+        self.ids.uErro.color = 0, 0, 0, 0#define a cor como sendo preta, ocultando o texto de erro
         self.ids.sErro.color = 0, 0, 0, 0
         self.ids.nErro.color = 0, 0, 0, 0
         self.ids.sxErro.color = 0, 0, 0, 0
         self.ids.cErro.color = 0, 0, 0, 0
         self.ids.dErro.color = 0, 0, 0, 0
+        # checa se não foi digitado somente o default
         if (u == "USUARIO"):
-            self.ids.uErro.color = 1, 0, 0, 1
+            self.ids.uErro.color = 1, 0, 0, 1#define a cor como sendo vermelha, revelando o texto de erro
         if (s == "SENHA"):
             self.ids.sErro.color = 1, 0, 0, 1
         if (n == "NOME COMPLETO"):
@@ -121,6 +119,7 @@ class Cadastro(FloatLayout):
             self.ids.cErro.color = 1, 0, 0, 1
         cursor = conn.execute("select USUARIO from LOGIN")
         rows = cursor.fetchall()
+        #checa se o usuario ja exite, se existir coloca um erro
         if (True):
             for i in rows:
                 if (str(i[0]) == u):
@@ -129,6 +128,7 @@ class Cadastro(FloatLayout):
             self.ids.sxErro.color = 1, 0, 0, 1
         if(s!=c):
             self.ids.cErro.color = 1, 0, 0, 1
+        #procura por algum problema na data informada
         try:
             if (True):
                 if(len(d)!=8 or d[2]!='/' or d[5]!='/'
@@ -145,13 +145,15 @@ class Cadastro(FloatLayout):
             self.ids.dErro.color,
         l=str(self.ids.uErro.color),str(self.ids.sErro.color),str(self.ids.nErro.color),str(self.ids.sxErro.color),str(self.ids.cErro.color),str(self.ids.dErro.color)
         chc=1
-        for i in l:
+
+        for i in l:#procura por algum erro
             if(str(i)!='[0, 0, 0, 0]'):
                 chc=0
         if(chc==1):
             conn.execute("insert into LOGIN (USUARIO,SENHA,NOME,NASCIMENTO,SEXO) "
-                                 "values('"+u+"','"+s+"','"+n+"','"+d+"','"+sx+"')")
+                                 "values('"+u+"','"+s+"','"+n+"','"+d+"','"+sx+"')")#adiciona as informações do novo usuario no BD
             conn.commit()
+            #ativa o botão de continuar
             self.ids.gam.color=1,1,1,1
             self.ids.gam.opacity=1
             self.ids.gam.disabled=False
@@ -163,17 +165,18 @@ class Cadastro(FloatLayout):
             self.ids.vol.disabled=True
             self.ids.suc.color = 1, 0, 0, 1
 
-class Home(FloatLayout):
-    def voltar(self):
+class Home(FloatLayout):#Tela de home do aplicatico
+    def voltar(self):#voltar para a tela anterior
         remove(self)
         global log
         log = Login()
         tela.root_window.add_widget(log)
-    def ajuda(self):
+    def ajuda(self):#buscar ajuda nas instruções
         remove(self)
         global jh
         jh = AjudaHome()
         tela.root_window.add_widget(jh)
+        #muda  a cor de parte do texto
         jh.ids.x1.text="Acessar[color=#ffffff]->Acesso aos cadernos de contas[/color]"
         jh.ids.x1.markup=True
         jh.ids.x2.text="Registrar[color=#ffffff]->Registro de um gasto/ganho[/color]"
@@ -184,21 +187,22 @@ class Home(FloatLayout):
         jh.ids.x4.markup=True
         jh.ids.x5.text="Tipos[color=#ffffff]->Criacao ou exclusao de algum tipo de gasto[/color]"
         jh.ids.x5.markup=True
-    def atalhos(self):
+    def atalhos(self):#mostra os atalhos para outras telas
         remove(self)
         global at
         at=Atalhos()
         tela.root_window.add_widget(at)
 
-class Atalhos(FloatLayout):
-    def voltar(self):
+class Atalhos(FloatLayout):#classe dos atalhos para outras telas
+    def voltar(self):#sair dos atalhos e ir para a tela anterior
         tela.root_window.add_widget(ant)
         remove(self)
-    def ajuda(self):
+    def ajuda(self):#buscar ajuda sobre os atalhos
         remove(self)
         global ja
         ja=AjudaAtalhos()
         tela.root_window.add_widget(ja)
+        #muda a acor de parte do texto
         ja.ids.x1.text = "Deletar[color=#ffffff]->Deleta um gasto/ganho[/color]"
         ja.ids.x1.markup = True
         ja.ids.x2.text = "Registrar[color=#ffffff]->Registro de um gasto/ganho[/color]"
@@ -212,12 +216,12 @@ class Atalhos(FloatLayout):
         ja.ids.x6.text = "Acessar[color=#ffffff]->Acesso aos cadernos de contas[/color]"
         ja.ids.x6.markup = True
 
-class AjudaHome(FloatLayout):
+class AjudaHome(FloatLayout):#tela de ajuda do home
     def voltar(self):
         remove(self)
         tela.root_window.add_widget(h)
 
-class AjudaAtalhos(FloatLayout):
+class AjudaAtalhos(FloatLayout):#tela de ajuda dos atalhos
     def voltar(self):
         remove(self)
         tela.root_window.add_widget(at)
